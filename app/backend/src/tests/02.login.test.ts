@@ -39,7 +39,7 @@ describe('Quando o campo email e password são informados', () => {
        .request(app)
        .post('/login')
        .send({ email: 'admin@admin.com', password: 'secret_admin' })
-    expect(httpResponse.status).to.equal(201);
+    expect(httpResponse.status).to.equal(200);
     expect(httpResponse.body).to.have.keys('token');
   });
 });
