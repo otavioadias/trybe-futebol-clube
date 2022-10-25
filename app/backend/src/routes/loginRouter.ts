@@ -1,10 +1,19 @@
-import { Router } from 'express';
+import { Request, Response, Router } from 'express';
+import LoginService from '../services/LoginService';
 import LoginController from '../controllers/LoginController';
+// import loginMiddleware from '../middlewares/loginMiddleware';
 
-const loginController = new LoginController();
+const loginService = new LoginService();
+const loginController = new LoginController(loginService);
 const router = Router();
 
 router
-  .post('/login', (req, res) => loginController.login(req, res));
+  .post(
+    '/login',
+    (
+      req: Request,
+      res: Response,
+    ) => loginController.login(req, res),
+  );
 
 export default router;

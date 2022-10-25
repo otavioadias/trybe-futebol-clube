@@ -1,11 +1,10 @@
+import * as express from 'express';
 import * as sinon from 'sinon';
 import * as chai from 'chai';
 // @ts-ignore
 import chaiHttp = require('chai-http');
 
 import { app } from '../app';
-
-import { Response } from 'superagent';
 
 chai.use(chaiHttp);
 
@@ -24,13 +23,24 @@ describe('Quando o campo email não é informado', () => {
 });
 
 describe('Quando o campo password não é informado', () => {
-  it('Deve retornar o status 400 ', async () => {
+  it('Deve retornar o status 400 ',async () => {
     const httpResponse = await chai
        .request(app)
        .post('/login')
        .send({ email: 'admin@admin.com'})
     expect(httpResponse.status).to.equal(400);
     expect(httpResponse.body).to.be.deep.equal({ error: 'O campo "password" é obrigatório' });
+  });
+});
+
+describe('Quando o campo email e password são informados', () => {
+  it('Deve retornar o status 201 ', async () => {
+    const httpResponse = await chai
+       .request(app)
+       .post('/login')
+       .send({ email: 'admin@admin.com', password: 'secret_admin' })
+    expect(httpResponse.status).to.equal(201);
+    expect(httpResponse.body).to.have.keys('token');
   });
 });
 });

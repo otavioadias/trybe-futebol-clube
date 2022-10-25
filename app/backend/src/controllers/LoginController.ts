@@ -1,18 +1,15 @@
 import { Request, Response } from 'express';
-import LoginService from '../services/LoginService';
+import ILoginServices from '../interfaces/ILoginServices';
 
 export default class LoginController {
-  private readonly loginService: LoginService;
+  private readonly loginService: ILoginServices;
 
-  constructor() {
-    this.loginService = new LoginService();
+  constructor(loginService: ILoginServices) {
+    this.loginService = loginService;
   }
 
-  login(req: Request, res: Response): Response | void {
-    const error = this.loginService.login(req.body);
-    if (error) {
-      return res.status(400).json(error);
-    }
-    return res.sendStatus(201);
+  async login(req: Request, res: Response): Promise<Response> {
+    const token = await this.loginService.login(req.body);
+    return res.status(201).json(token);
   }
 }

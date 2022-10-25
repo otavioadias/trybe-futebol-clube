@@ -1,21 +1,33 @@
-interface IUser {
-  email: string,
-  username?: string,
-  role?: string,
-  password: string,
-}
+import bcrypt = require('bcryptjs');
+import IUser from '../interfaces/IUser';
+import MissingParamError from '../errors/missing-param-error';
+import ILoginServices from '../interfaces/ILoginServices';
+import Users from '../database/models/Users';
+import generateToken from '../utils/JWT';
 
-export default class LoginService {
+export default class LoginService implements ILoginServices {
   private user: IUser;
+  private pass: string;
 
-  login(user: IUser): object {
+  async decodePassword(password: string, passwordDB: string): Promise<boolean> {
+    this.pass = password;
+    const result = await bcrypt.compare(password, passwordDB);
+    return result;
+  }
+
+  async login(user: IUser): Promise<void | object> {
     this.user = user;
     if (!user.email) {
-      return { error: 'O campo "email" é obrigatório' };
+      throw new MissingParamError('O campo "email" é obrigatório');
     }
     if (!user.password) {
-      return { error: 'O campo "password" é obrigatório' };
+      throw new MissingParamError('O campo "password" é obrigatório');
     }
-    return { message: 'ok' };
+    const [userExist] = await Users.findAll({ where: { email: user.email } });
+    const decode = await this.decodePassword(user.password, userExist.password);
+    if (decode === true) {
+      const token = await generateToken({ email: userExist.email, username: userExist.username });
+      return { token };
+    }
   }
 }
