@@ -40,7 +40,3 @@ Users.init({
 });
 
 export default Users;
-export function findOne(arg0: { where: { email: string; password: string; }; }) {
-    throw new Error('Function not implemented.');
-}
-
