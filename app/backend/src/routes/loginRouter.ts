@@ -15,4 +15,13 @@ router
     ) => loginController.login(req, res),
   );
 
+router
+  .get(
+    '/login/validate',
+    (
+      req: Request,
+      res: Response,
+    ) => loginController.validateLogin(req, res),
+  );
+
 export default router;

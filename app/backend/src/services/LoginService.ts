@@ -5,9 +5,11 @@ import ILoginServices from '../interfaces/ILoginServices';
 import Users from '../database/models/Users';
 import generateToken from '../utils/JWT';
 import InvalidParamError from '../errors/invalid-param-error';
+import decodeJWT from '../utils/decodeJWT';
 
 export default class LoginService implements ILoginServices {
   private pass: string;
+  private tokenUser: string;
 
   async decodePassword(password: string, passwordDB: string): Promise<boolean> {
     this.pass = password;
@@ -27,7 +29,14 @@ export default class LoginService implements ILoginServices {
     if (decode === false) {
       throw new InvalidParamError('Incorrect email or password');
     }
-    const token = await generateToken({ email: userExist.email, username: userExist.username });
+    const token = await generateToken({
+      email: userExist.email, username: userExist.username, role: userExist.role });
     return { token };
+  }
+
+  async validateLogin(token: string): Promise<object> {
+    this.tokenUser = token;
+    const objectUser = await decodeJWT(token);
+    return { role: objectUser.role };
   }
 }
