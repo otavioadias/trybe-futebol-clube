@@ -8,6 +8,15 @@ const router = Router();
 
 router
   .get(
+    '/teams/:id',
+    (
+      req: Request,
+      res: Response,
+    ) => teamsController.getTeamById(req, res),
+  );
+
+router
+  .get(
     '/teams',
     (
       req: Request,

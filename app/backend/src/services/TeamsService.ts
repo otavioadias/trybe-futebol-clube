@@ -6,4 +6,9 @@ export default class TeamsService implements ITeamsServices {
     const teams = await Teams.findAll();
     return teams;
   };
+
+  getTeamById = async (teamId: string): Promise<object> => {
+    const [team] = await Teams.findAll({ where: { id: teamId } });
+    return team;
+  };
 }
