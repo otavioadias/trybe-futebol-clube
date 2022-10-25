@@ -18,7 +18,7 @@ export default class LoginService implements ILoginServices {
   async login(user: IUser): Promise<void | object> {
     this.user = user;
     if (!user.email) {
-      throw new MissingParamError('O campo "email" é obrigatório');
+      throw new MissingParamError('All fields must be filled');
     }
     if (!user.password) {
       throw new MissingParamError('O campo "password" é obrigatório');
