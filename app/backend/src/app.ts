@@ -2,6 +2,7 @@ import 'express-async-errors';
 import * as express from 'express';
 import loginRouter from './routes/loginRouter';
 import errorMiddleware from './middlewares/errorMiddleware';
+import teamsRouter from './routes/teamsRouter';
 
 class App {
   public app: express.Express;
@@ -14,6 +15,7 @@ class App {
     // Não remover essa rota
     this.app.get('/', (req, res) => res.json({ ok: true }));
     this.app.use(loginRouter);
+    this.app.use(teamsRouter);
     this.app.use(errorMiddleware);
   }
 
