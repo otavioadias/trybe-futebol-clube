@@ -43,4 +43,24 @@ describe('Quando o campo email e password são informados', () => {
     expect(httpResponse.body).to.have.keys('token');
   });
 });
+
+describe('Quando o campo email é inválido', () => {
+  it('Deve retornar o status 401 ', async () => {
+    const httpResponse = await chai
+       .request(app)
+       .post('/login')
+       .send({ email: 'oi@admin.com', password: 'secret_admin' })
+    expect(httpResponse.status).to.equal(401);
+  });
+});
+
+describe('Quando o campo senha é inválido', () => {
+  it('Deve retornar o status 401 ', async () => {
+    const httpResponse = await chai
+       .request(app)
+       .post('/login')
+       .send({ email: 'admin@admin.com', password: 'secret' })
+    expect(httpResponse.status).to.equal(401);
+  });
+});
 });

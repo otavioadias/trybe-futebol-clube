@@ -4,9 +4,9 @@ import MissingParamError from '../errors/missing-param-error';
 import ILoginServices from '../interfaces/ILoginServices';
 import Users from '../database/models/Users';
 import generateToken from '../utils/JWT';
+import InvalidParamError from '../errors/invalid-param-error';
 
 export default class LoginService implements ILoginServices {
-  private user: IUser;
   private pass: string;
 
   async decodePassword(password: string, passwordDB: string): Promise<boolean> {
@@ -15,16 +15,19 @@ export default class LoginService implements ILoginServices {
     return result;
   }
 
-  async login(user: IUser): Promise<void | object> {
-    this.user = user;
+  async login(user: IUser): Promise<object> {
     if (!user.email || !user.password) {
       throw new MissingParamError('All fields must be filled');
     }
     const [userExist] = await Users.findAll({ where: { email: user.email } });
-    const decode = await this.decodePassword(user.password, userExist.password);
-    if (decode === true) {
-      const token = await generateToken({ email: userExist.email, username: userExist.username });
-      return { token };
+    if (!userExist) {
+      throw new InvalidParamError('Incorrect email or password');
     }
+    const decode = await this.decodePassword(user.password, userExist.password);
+    if (decode === false) {
+      throw new InvalidParamError('Incorrect email or password');
+    }
+    const token = await generateToken({ email: userExist.email, username: userExist.username });
+    return { token };
   }
 }
