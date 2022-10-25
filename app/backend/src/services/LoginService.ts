@@ -17,11 +17,8 @@ export default class LoginService implements ILoginServices {
 
   async login(user: IUser): Promise<void | object> {
     this.user = user;
-    if (!user.email) {
+    if (!user.email || !user.password) {
       throw new MissingParamError('All fields must be filled');
-    }
-    if (!user.password) {
-      throw new MissingParamError('O campo "password" é obrigatório');
     }
     const [userExist] = await Users.findAll({ where: { email: user.email } });
     const decode = await this.decodePassword(user.password, userExist.password);

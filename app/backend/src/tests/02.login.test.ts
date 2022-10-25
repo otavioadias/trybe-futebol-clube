@@ -29,7 +29,7 @@ describe('Quando o campo password não é informado', () => {
        .post('/login')
        .send({ email: 'admin@admin.com'})
     expect(httpResponse.status).to.equal(400);
-    expect(httpResponse.body).to.be.deep.equal({ message: 'O campo "password" é obrigatório' });
+    expect(httpResponse.body).to.be.deep.equal({ message: 'All fields must be filled' });
   });
 });
 
