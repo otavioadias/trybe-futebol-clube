@@ -15,7 +15,7 @@ const { expect } = chai;
 
 describe('Teste da rota /matches', () => {
 describe('Requisição GET da rota /matches ', () => {
-  beforeEach(() => sinon.stub(Model, 'findAll').resolves(matches as Matches[]));
+  beforeEach(() => sinon.stub(Model, 'findAll').resolves(matches as []));
   afterEach(() => sinon.restore());
   it('Deve retornar o status 200 ', async () => {
     const httpResponse = await chai
