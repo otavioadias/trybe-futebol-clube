@@ -6,8 +6,11 @@ import chaiHttp = require('chai-http');
 
 import { app } from '../app';
 import { Model } from 'sequelize';
-import Matches from '../database/models/Matches';
 import { matches } from './mocks/matches';
+import { matchesTrue } from './mocks/matchesTrue';
+import { matchesFalse } from './mocks/matchesFalse';
+
+
 
 chai.use(chaiHttp);
 
@@ -20,21 +23,33 @@ describe('Requisição GET da rota /matches ', () => {
   it('Deve retornar o status 200 ', async () => {
     const httpResponse = await chai
        .request(app)
-       .get('/teams')
+       .get('/matches')
     expect(httpResponse.status).to.equal(200);
     expect(httpResponse.body).to.be.deep.equal(matches);
   });
 });
 
-// describe('Requisição GET da rota /matches?inProgress=true ', () => {
-//   beforeEach(() => sinon.stub(Model, 'findAll').resolves(matches as []));
-//   afterEach(() => sinon.restore());
-//   it('Deve retornar o status 200 ', async () => {
-//     const httpResponse = await chai
-//        .request(app)
-//        .get('/teams')
-//     expect(httpResponse.status).to.equal(200);
-//     expect(httpResponse.body).to.be.deep.equal(matches);
-//   });
-// });
+describe('Requisição GET da rota /matches?inProgress=true ', () => {
+  beforeEach(() => sinon.stub(Model, 'findAll').resolves(matchesTrue as []));
+  afterEach(() => sinon.restore());
+  it('Deve retornar o status 200 ', async () => {
+    const httpResponse = await chai
+       .request(app)
+       .get('/matches?inProgress=true')
+    expect(httpResponse.status).to.equal(200);
+    expect(httpResponse.body).to.be.deep.equal(matchesTrue);
+  });
+});
+
+describe('Requisição GET da rota /matches?inProgress=true ', () => {
+  beforeEach(() => sinon.stub(Model, 'findAll').resolves(matchesFalse as []));
+  afterEach(() => sinon.restore());
+  it('Deve retornar o status 200 ', async () => {
+    const httpResponse = await chai
+       .request(app)
+       .get('/matches?inProgress=false')
+    expect(httpResponse.status).to.equal(200);
+    expect(httpResponse.body).to.be.deep.equal(matchesFalse);
+  });
+});
 });
