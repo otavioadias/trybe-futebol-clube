@@ -5,6 +5,7 @@ import * as chai from 'chai';
 import chaiHttp = require('chai-http');
 
 import { app } from '../app';
+import LoginService from '../services/LoginService';
 
 chai.use(chaiHttp);
 
@@ -61,6 +62,19 @@ describe('Quando o campo senha é inválido', () => {
        .post('/login')
        .send({ email: 'admin@admin.com', password: 'secret' })
     expect(httpResponse.status).to.equal(401);
+  });
+});
+
+describe('Faz a validação e retorna o role', () => {
+  beforeEach(() => sinon.stub(LoginService.prototype, 'validateLogin').resolves({ role: 'admin' }));
+  afterEach(() => sinon.restore());
+  it('Deve retornar o status 200 ', async () => {
+    const httpResponse = await chai
+       .request(app)
+       .get('/login/validate')
+       .send({ token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsInVzZXJuYW1lIjoiQWRtaW4iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NjY4MTMzODEsImV4cCI6MTY2NzQxODE4MX0.lBHLIEKSpFPweuEMCldZSeDYIKuPUra5r79VMRU4ghI'})
+    expect(httpResponse.status).to.equal(200);
+    expect(httpResponse.body).to.be.deep.equal({ role: 'admin' });
   });
 });
 });
