@@ -25,4 +25,16 @@ describe('Requisição GET da rota /matches ', () => {
     expect(httpResponse.body).to.be.deep.equal(matches);
   });
 });
+
+// describe('Requisição GET da rota /matches?inProgress=true ', () => {
+//   beforeEach(() => sinon.stub(Model, 'findAll').resolves(matches as []));
+//   afterEach(() => sinon.restore());
+//   it('Deve retornar o status 200 ', async () => {
+//     const httpResponse = await chai
+//        .request(app)
+//        .get('/teams')
+//     expect(httpResponse.status).to.equal(200);
+//     expect(httpResponse.body).to.be.deep.equal(matches);
+//   });
+// });
 });
