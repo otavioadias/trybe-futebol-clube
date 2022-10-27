@@ -1,6 +1,7 @@
 import { Request, Response, Router } from 'express';
 import MatchesService from '../services/MatchesService';
 import MatchesController from '../controllers/MatchesController';
+import matchesMiddleware from '../middlewares/matchesMiddleware';
 
 const matchesService = new MatchesService();
 const matchesController = new MatchesController(matchesService);
@@ -18,6 +19,7 @@ router
 router
   .post(
     '/matches',
+    matchesMiddleware,
     (
       req: Request,
       res: Response,
