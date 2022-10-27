@@ -15,4 +15,13 @@ router
     ) => matchesController.getAllMatches(req, res),
   );
 
+router
+  .post(
+    '/matches',
+    (
+      req: Request,
+      res: Response,
+    ) => matchesController.newMatche(req, res),
+  );
+
 export default router;

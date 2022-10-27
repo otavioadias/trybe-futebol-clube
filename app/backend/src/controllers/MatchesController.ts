@@ -13,4 +13,10 @@ export default class TeamsController {
     const matches = await this.matchesService.getAllMatches(inProgress);
     return res.status(200).json(matches);
   }
+
+  async newMatche(req: Request, res: Response): Promise<Response> {
+    const token = req.header('Authorization');
+    const matche = await this.matchesService.newMatche(token, req.body);
+    return res.status(201).json(matche);
+  }
 }

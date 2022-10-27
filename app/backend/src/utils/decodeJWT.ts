@@ -9,7 +9,7 @@ interface MyToken {
 }
 
 const userJWT = async (token: string) => {
-  const decoded = await jwtDecode<MyToken>(token);
+  const decoded = jwtDecode<MyToken>(token);
   return decoded;
 };
 

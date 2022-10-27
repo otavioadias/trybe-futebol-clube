@@ -9,6 +9,8 @@ import { Model } from 'sequelize';
 import { matches } from './mocks/matches';
 import { matchesTrue } from './mocks/matchesTrue';
 import { matchesFalse } from './mocks/matchesFalse';
+import { newMatche, sendMatche } from './mocks/newMatche';
+import Matches from '../database/models/Matches';
 
 
 
@@ -41,7 +43,7 @@ describe('Requisição GET da rota /matches?inProgress=true ', () => {
   });
 });
 
-describe('Requisição GET da rota /matches?inProgress=true ', () => {
+describe('Requisição GET da rota /matches?inProgress=true', () => {
   beforeEach(() => sinon.stub(Model, 'findAll').resolves(matchesFalse as []));
   afterEach(() => sinon.restore());
   it('Deve retornar o status 200 ', async () => {
@@ -52,4 +54,17 @@ describe('Requisição GET da rota /matches?inProgress=true ', () => {
     expect(httpResponse.body).to.be.deep.equal(matchesFalse);
   });
 });
+
+// describe('Requisição POST da rota /matches', () => {
+//   beforeEach(() => sinon.stub(Model, 'create').resolves(newMatche as any));
+//   afterEach(() => sinon.restore());
+//   it('Deve retornar o status 201 para cadastro de nova partida ', async () => {
+//     const httpResponse = await chai
+//        .request(app)
+//        .post('/matches')
+//        .send(sendMatche)
+//     expect(httpResponse.status).to.equal(201);
+//     expect(httpResponse.body).to.be.deep.equal(newMatche);
+//   });
+// });
 });
