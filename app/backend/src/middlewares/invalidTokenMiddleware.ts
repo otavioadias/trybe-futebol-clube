@@ -9,7 +9,7 @@ const invalidTokenMiddleware = async (req: Request, res: Response, next: NextFun
   const result = await matchesService.validateUser(token);
   console.log(result);
   if (!result) {
-    return res.status(404).json({ message: INVALID_TOKEN });
+    return res.status(401).json({ message: INVALID_TOKEN });
   }
   next();
 };

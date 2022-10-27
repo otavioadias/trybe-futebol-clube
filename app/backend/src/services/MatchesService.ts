@@ -3,6 +3,7 @@ import IMatchesServices, { inProgressType, Matche } from '../interfaces/IMatches
 import Matches from '../database/models/Matches';
 import Teams from '../database/models/Teams';
 import verify from '../utils/JWTVerify';
+import InvalidTokenError from '../errors/invalid-token-error';
 
 export default class MatchesService implements IMatchesServices {
   private tokenUser: string | undefined;
@@ -66,11 +67,15 @@ export default class MatchesService implements IMatchesServices {
     }
   };
 
-  async validateUser(token: string | undefined): Promise<string | JwtPayload | void> {
-    this.tokenUser = token;
-    if (token) {
-      const verifyToken = await verify(token);
-      return verifyToken;
+  async validateUser(token: string | undefined): Promise<string | void | JwtPayload> {
+    try {
+      this.tokenUser = token;
+      if (token) {
+        const verifyToken = await verify(token);
+        return verifyToken;
+      }
+    } catch (e) {
+      throw new InvalidTokenError('Token must be a valid token');
     }
   }
 
