@@ -2,6 +2,7 @@ import { Request, Response, Router } from 'express';
 import MatchesService from '../services/MatchesService';
 import MatchesController from '../controllers/MatchesController';
 import matchesMiddleware from '../middlewares/matchesMiddleware';
+import unknownTeamMiddleware from '../middlewares/unknownTeamMiddleware';
 
 const matchesService = new MatchesService();
 const matchesController = new MatchesController(matchesService);
@@ -20,6 +21,7 @@ router
   .post(
     '/matches',
     matchesMiddleware,
+    unknownTeamMiddleware,
     (
       req: Request,
       res: Response,
