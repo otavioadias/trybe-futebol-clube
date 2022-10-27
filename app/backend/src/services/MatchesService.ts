@@ -70,4 +70,11 @@ export default class MatchesService implements IMatchesServices {
     const verifyToken = await verify(token);
     return verifyToken;
   }
+
+  public finishMatche = async (id: string): Promise<void> => {
+    await Matches.update(
+      { inProgress: false },
+      { where: { id } },
+    );
+  };
 }

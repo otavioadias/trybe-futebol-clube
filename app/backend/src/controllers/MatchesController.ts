@@ -19,4 +19,10 @@ export default class TeamsController {
     const matche = await this.matchesService.newMatche(token, req.body);
     return res.status(201).json(matche);
   }
+
+  async finishMatche(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+    await this.matchesService.finishMatche(id);
+    return res.status(201).json({ message: 'Finished' });
+  }
 }
