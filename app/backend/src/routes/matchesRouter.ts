@@ -3,6 +3,7 @@ import MatchesService from '../services/MatchesService';
 import MatchesController from '../controllers/MatchesController';
 import matchesMiddleware from '../middlewares/matchesMiddleware';
 import unknownTeamMiddleware from '../middlewares/unknownTeamMiddleware';
+import invalidTokenMiddleware from '../middlewares/invalidTokenMiddleware';
 
 const matchesService = new MatchesService();
 const matchesController = new MatchesController(matchesService);
@@ -20,6 +21,7 @@ router
 router
   .post(
     '/matches',
+    invalidTokenMiddleware,
     matchesMiddleware,
     unknownTeamMiddleware,
     (

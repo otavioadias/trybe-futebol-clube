@@ -5,7 +5,7 @@ import Teams from '../database/models/Teams';
 import verify from '../utils/JWTVerify';
 
 export default class MatchesService implements IMatchesServices {
-  private tokenUser: string;
+  private tokenUser: string | undefined;
 
   public getByProgress = async (inProgress: boolean): Promise<object> => {
     const matches = await Matches.findAll({
@@ -51,7 +51,8 @@ export default class MatchesService implements IMatchesServices {
     return this.getAll();
   };
 
-  public newMatche = async (token: string, informations: Matche): Promise<object | void> => {
+  public newMatche = async (token: string | undefined, informations: Matche)
+  : Promise<object | void> => {
     const validate = await this.validateUser(token);
     if (validate) {
       const newMatche = await Matches.create({
@@ -65,10 +66,12 @@ export default class MatchesService implements IMatchesServices {
     }
   };
 
-  async validateUser(token: string): Promise<string | JwtPayload> {
+  async validateUser(token: string | undefined): Promise<string | JwtPayload | void> {
     this.tokenUser = token;
-    const verifyToken = await verify(token);
-    return verifyToken;
+    if (token) {
+      const verifyToken = await verify(token);
+      return verifyToken;
+    }
   }
 
   public finishMatche = async (id: string): Promise<void> => {
