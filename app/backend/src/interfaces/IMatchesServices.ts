@@ -15,4 +15,5 @@ export default interface IMatchesServices {
   getByProgress(inProgress: boolean): Promise<object>,
   newMatche(token: string | undefined, informations: Matche): Promise<object | void>,
   finishMatche(id: string): Promise<void>,
+  updateMatche(id: string, homeTeamGoals: string, awayTeamGoals: string): Promise<object | null>,
 }

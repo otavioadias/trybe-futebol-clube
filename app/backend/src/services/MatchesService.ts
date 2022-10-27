@@ -85,4 +85,14 @@ export default class MatchesService implements IMatchesServices {
       { where: { id } },
     );
   };
+
+  public updateMatche = async (id: string, homeTeamGoals: string, awayTeamGoals: string)
+  : Promise<object | null> => {
+    await Matches.update(
+      { homeTeamGoals, awayTeamGoals },
+      { where: { id } },
+    );
+    const matche = await Matches.findOne({ where: { id } });
+    return matche;
+  };
 }

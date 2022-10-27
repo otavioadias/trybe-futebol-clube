@@ -39,4 +39,13 @@ router
     ) => matchesController.finishMatche(req, res),
   );
 
+router
+  .patch(
+    '/matches/:id',
+    (
+      req: Request,
+      res: Response,
+    ) => matchesController.updateMatche(req, res),
+  );
+
 export default router;
