@@ -8,11 +8,19 @@ const router = Router();
 
 router
   .get(
+    '/leaderboard/home',
+    (
+      req: Request,
+      res: Response,
+    ) => leaderboardController.getHome(req, res),
+  );
+
+router
+  .get(
     '/leaderboard',
     (
       req: Request,
       res: Response,
     ) => leaderboardController.getAll(req, res),
   );
-
 export default router;

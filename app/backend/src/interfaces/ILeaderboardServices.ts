@@ -1,3 +1,4 @@
 export default interface ILeaderBoardServices {
-  leaderboardHome (): Promise<object[] | unknown>
+  leaderboard(): Promise<object[] | unknown>,
+  leaderboardHome(): Promise<object[] | unknown>
 }

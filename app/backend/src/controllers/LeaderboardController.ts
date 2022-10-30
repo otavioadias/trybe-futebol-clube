@@ -9,8 +9,12 @@ export default class LeaderBoardController {
   }
 
   async getAll(req: Request, res: Response): Promise<Response> {
-    const board = await this.leaderboardServices.leaderboardHome();
-    console.log(board);
+    const board = await this.leaderboardServices.leaderboard();
     return res.status(200).json(board);
+  }
+
+  async getHome(req: Request, res: Response): Promise<Response> {
+    const home = await this.leaderboardServices.leaderboardHome();
+    return res.status(200).json(home);
   }
 }
