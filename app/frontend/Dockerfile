@@ -6,3 +6,4 @@ COPY . .
 EXPOSE 3000
 ENTRYPOINT [ "npm" ]
 CMD ["start"]
+# CMD ["npm" "start"]
