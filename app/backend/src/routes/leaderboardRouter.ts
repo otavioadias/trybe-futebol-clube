@@ -8,6 +8,15 @@ const router = Router();
 
 router
   .get(
+    '/leaderboard/away',
+    (
+      req: Request,
+      res: Response,
+    ) => leaderboardController.getAway(req, res),
+  );
+
+router
+  .get(
     '/leaderboard/home',
     (
       req: Request,
