@@ -53,8 +53,8 @@ OR home_team_goals > away_team_goals AND away_team = 1;
 
 SELECT COUNT(*) AS totalDraws 
 FROM TRYBE_FUTEBOL_CLUBE.matches 
-WHERE away_team_goals = home_team_goals AND home_team = 2
-OR home_team_goals = away_team_goals AND away_team = 2;
+WHERE away_team_goals = home_team_goals AND home_team = 1
+OR home_team_goals = away_team_goals AND away_team = 1;
 
 SELECT COUNT(*) AS totalDraws FROM TRYBE_FUTEBOL_CLUBE.matches WHERE home_team_goals = away_team_goals AND home_team = 2;
 

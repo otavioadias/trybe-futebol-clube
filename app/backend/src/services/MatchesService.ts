@@ -52,8 +52,8 @@ export default class MatchesService implements IMatchesServices {
     return this.getAll();
   };
 
-  public newMatche = async (token: string | undefined, informations: Matche)
-  : Promise<object | void> => {
+  public async newMatche(token: string | undefined, informations: Matche)
+    : Promise<object | void> {
     const validate = await this.validateUser(token);
     if (validate) {
       const newMatche = await Matches.create({
@@ -65,9 +65,9 @@ export default class MatchesService implements IMatchesServices {
       });
       return newMatche;
     }
-  };
+  }
 
-  async validateUser(token: string | undefined): Promise<string | void | JwtPayload> {
+  public async validateUser(token: string | undefined): Promise<string | void | JwtPayload> {
     try {
       this.tokenUser = token;
       if (token) {

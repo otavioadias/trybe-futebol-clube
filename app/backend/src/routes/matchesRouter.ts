@@ -22,8 +22,8 @@ router
   .post(
     '/matches',
     invalidTokenMiddleware,
-    matchesMiddleware,
     unknownTeamMiddleware,
+    matchesMiddleware,
     (
       req: Request,
       res: Response,

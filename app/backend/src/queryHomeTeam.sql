@@ -1,3 +1,4 @@
+-- Active: 1668024678284@@127.0.0.1@3002@TRYBE_FUTEBOL_CLUBE
 SELECT 
       m.away_team AS id
     , t.team_name AS name
